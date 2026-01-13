@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pour toi ❤️</title>
+  
+  <!-- PWA Meta Tags -->
+  <meta name="theme-color" content="#667eea">
+  <meta name="description" content="Un site d'amour pour Khadidiatou">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Pour Khadidiatou">
+  <link rel="manifest" href="manifest.json">
+  
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+    
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+    
+    body { 
+      min-height: 100vh; 
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      color: #fff; 
+      overflow-x: hidden;
+      position: relative;
+      padding: 0;
+      margin: 0;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 80%, rgba(255,255,255,0.1) 0%, transparent 50%);
+      pointer-events: none;
+      animation: pulse 8s ease-in-out infinite;
+    }
+    
+    .card { 
+      background: rgba(255,255,255,0.1); 
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 32px; 
+      padding: 40px 32px; 
+      max-width: 100vw;
+      width: 100vw;
+      min-height: 100vh;
+      text-align: center; 
+      box-shadow: 0 30px 60px rgba(0,0,0,0.3), 
+                  0 0 0 1px rgba(255,255,255,0.1) inset,
+                  0 0 100px rgba(255,255,255,0.05);
+      animation: fadeInUp 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow-y: auto;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.05), transparent);
+      transform: rotate(45deg);
+      animation: shine 3s infinite;
+    }
+    
+    h1 { 
+      font-size: 2.8rem; 
+      margin-bottom: 8px; 
+      font-weight: 700;
+      background: linear-gradient(135deg, #fff, #f0f0f0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 4px 20px rgba(255,255,255,0.3);
+      animation: titleGlow 3s ease-in-out infinite;
+    }
+
+    .subtitle {
+      font-size: 1.4rem;
+      font-weight: 300;
+      margin-bottom: 12px;
+      opacity: 0.9;
+      font-style: italic;
+    }
+    
+    p { 
+      font-size: 1.1rem; 
+      line-height: 1.7; 
+      margin-bottom: 24px; 
+      font-weight: 300;
+      opacity: 0.95;
+    }
+    
+    .actions { 
+      display: flex; 
+      gap: 12px; 
+      justify-content: center; 
+      flex-wrap: wrap; 
+      margin-bottom: 24px; 
+    }
+    
+    button { 
+      border: none; 
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white; 
+      padding: 14px 28px; 
+      font-size: 1rem; 
+      border-radius: 50px; 
+      cursor: pointer; 
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      font-weight: 600;
+      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    button::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    button:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+    
+    button.secondary { 
+      background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.1));
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+    
+    button:hover { 
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 12px 30px rgba(102, 126, 234, 0.6);
+    }
+
+    button:active {
+      transform: translateY(-1px) scale(1.02);
+    }
+    
+    button.secondary:hover { 
+      background: linear-gradient(135deg, rgba(255,255,255,0.3), rgba(255,255,255,0.15));
+      box-shadow: 0 12px 30px rgba(255,255,255,0.3);
+    }
+    
+    video { 
+      width: 90%;
+      max-width: 600px;
+      border-radius: 20px; 
+      margin: 20px auto; 
+      box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+      border: 2px solid rgba(255,255,255,0.1);
+      display: block;
+    }
+    
+    .secret { 
+      display: none; 
+      margin-top: 20px; 
+      padding: 20px; 
+      background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
+      border-radius: 20px; 
+      animation: fadeIn 0.8s ease;
+      border: 1px solid rgba(255,255,255,0.2);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    .lyrics-scroll { 
+      height: 320px; 
+      overflow-y: auto; 
+      overflow-x: hidden;
+      margin-top: 24px; 
+      position: relative; 
+      background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+      border-radius: 20px; 
+      padding: 24px 16px;
+      border: 1px solid rgba(255,255,255,0.15);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2) inset;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      width: 90%;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .lyrics-scroll::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .lyrics-scroll::-webkit-scrollbar-track {
+      background: rgba(255,255,255,0.05);
+      border-radius: 10px;
+    }
+
+    .lyrics-scroll::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,0.3);
+      border-radius: 10px;
+    }
+
+    .lyrics-scroll::-webkit-scrollbar-thumb:hover {
+      background: rgba(255,255,255,0.5);
+    }
+
+    .lyrics-scroll::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: linear-gradient(to bottom, rgba(102,126,234,0.3), transparent);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .lyrics-scroll::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: linear-gradient(to top, rgba(102,126,234,0.3), transparent);
+      pointer-events: none;
+      z-index: 2;
+    }
+    
+    .lyrics-inner { 
+      width: 100%; 
+      padding: 0 12px;
+      min-height: 100%;
+    }
+    
+    .lyric-line { 
+      display: flex; 
+      justify-content: space-between; 
+      margin-bottom: 18px; 
+      gap: 16px; 
+      opacity: 0.4; 
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      padding: 12px 16px; 
+      border-radius: 12px;
+      transform: scale(0.95);
+      filter: blur(1px);
+    }
+    
+    .lyric-line.active { 
+      opacity: 1; 
+      background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.1));
+      transform: scale(1);
+      font-weight: 600;
+      box-shadow: 0 4px 20px rgba(255,255,255,0.2);
+      filter: blur(0);
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    
+    .lyric-line div { 
+      width: 48%; 
+      text-align: center; 
+      font-size: 0.95rem; 
+      line-height: 1.5; 
+    }
+    
+    .lyric-line.header { 
+      opacity: 1 !important; 
+      font-weight: 700; 
+      margin-bottom: 24px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.08));
+      transform: scale(1) !important;
+      filter: blur(0) !important;
+      font-size: 1rem;
+    }
+
+    .controls-container {
+      margin-top: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 90%;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .time-display {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      opacity: 0.8;
+      font-weight: 500;
+    }
+
+    .progress-bar { 
+      width: 100%; 
+      height: 6px; 
+      background: rgba(255,255,255,0.15);
+      border-radius: 10px; 
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2) inset;
+    }
+
+    .progress-bar:hover {
+      height: 8px;
+    }
+    
+    .progress-fill { 
+      height: 100%; 
+      background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+      background-size: 200% 100%;
+      width: 0%; 
+      transition: width 0.1s linear;
+      position: relative;
+      animation: progressGlow 3s ease-in-out infinite;
+      box-shadow: 0 0 20px rgba(102,126,234,0.6);
+    }
+
+    .progress-fill::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 14px;
+      height: 14px;
+      background: white;
+      border-radius: 50%;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .progress-bar:hover .progress-fill::after {
+      opacity: 1;
+    }
+
+    .heart { 
+      position: fixed; 
+      font-size: 20px; 
+      animation: float 6s linear infinite; 
+      pointer-events: none;
+      filter: drop-shadow(0 0 10px rgba(255,255,255,0.5));
+    }
+
+    .fullscreen-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: white;
+      padding: 8px 12px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.3s;
+      z-index: 10;
+    }
+
+    .fullscreen-btn:hover {
+      background: rgba(255,255,255,0.3);
+      transform: scale(1.1);
+    }
+
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    @keyframes shine {
+      0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+      100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+    }
+
+    @keyframes titleGlow {
+      0%, 100% { text-shadow: 0 4px 20px rgba(255,255,255,0.3); }
+      50% { text-shadow: 0 4px 40px rgba(255,255,255,0.6); }
+    }
+
+    @keyframes progressGlow {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    
+    @keyframes float { 
+      0% { transform: translateY(110vh) rotate(0deg) scale(1); opacity: 0; } 
+      10% { opacity: 1; } 
+      100% { transform: translateY(-10vh) rotate(360deg) scale(1.5); opacity: 0; } 
+    }
+    
+    @keyframes fadeIn { 
+      from { opacity: 0; transform: translateY(20px); } 
+      to { opacity: 1; transform: translateY(0); } 
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px) scale(0.95); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .end-message {
+      display: none;
+      margin-top: 20px;
+      padding: 24px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.1));
+      border-radius: 20px;
+      animation: fadeIn 1s ease;
+      border: 1px solid rgba(255,255,255,0.3);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .end-message p {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    /* Étoiles scintillantes romantiques */
+    .star {
+      position: fixed;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      box-shadow: 0 0 6px rgba(255,255,255,0.8);
+      animation: twinkle 3s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.5); }
+    }
+
+    /* Photo romantique qui apparaît */
+    .love-photo {
+      display: none;
+      margin: 20px auto;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid rgba(255,255,255,0.3);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+      animation: photoReveal 1.5s ease;
+    }
+
+    @keyframes photoReveal {
+      from { opacity: 0; transform: scale(0.5) rotate(-10deg); }
+      to { opacity: 1; transform: scale(1) rotate(0deg); }
+    }
+
+    /* Message d'amour flottant */
+    .floating-message {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.85));
+      color: #667eea;
+      padding: 30px 40px;
+      border-radius: 24px;
+      font-size: 1.4rem;
+      font-weight: 700;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+      display: none;
+      z-index: 1000;
+      animation: messageFloat 2s ease;
+      max-width: 80%;
+    }
+
+    @keyframes messageFloat {
+      0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+      100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    }
+
+    /* Particules d'amour au clic */
+    .love-particle {
+      position: fixed;
+      font-size: 20px;
+      pointer-events: none;
+      animation: particleBurst 1s ease-out forwards;
+      z-index: 9999;
+    }
+
+    @keyframes particleBurst {
+      0% { 
+        opacity: 1; 
+        transform: translate(0, 0) scale(1) rotate(0deg); 
+      }
+      100% { 
+        opacity: 0; 
+        transform: translate(var(--tx), var(--ty)) scale(0.5) rotate(360deg); 
+      }
+    }
+
+    /* Modal Quiz */
+    .quiz-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(10px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .quiz-modal.active {
+      display: flex;
+    }
+
+    .quiz-content {
+      background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.85));
+      padding: 40px;
+      border-radius: 24px;
+      max-width: 500px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      color: #667eea;
+      animation: messageFloat 0.5s ease;
+    }
+
+    .quiz-content h2 {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+      color: #667eea;
+    }
+
+    .quiz-content p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      color: #764ba2;
+      font-weight: 500;
+    }
+
+    .quiz-input {
+      width: 100%;
+      padding: 15px 20px;
+      font-size: 1.1rem;
+      border: 2px solid #667eea;
+      border-radius: 50px;
+      margin-bottom: 20px;
+      text-align: center;
+      font-family: 'Poppins', sans-serif;
+      transition: all 0.3s;
+    }
+
+    .quiz-input:focus {
+      outline: none;
+      border-color: #764ba2;
+      box-shadow: 0 0 20px rgba(102,126,234,0.3);
+    }
+
+    .quiz-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .quiz-btn {
+      padding: 15px 30px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .quiz-btn.submit {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+    }
+
+    .quiz-btn.submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(102,126,234,0.5);
+    }
+
+    .quiz-btn.cancel {
+      background: rgba(0,0,0,0.1);
+      color: #667eea;
+    }
+
+    .quiz-btn.cancel:hover {
+      background: rgba(0,0,0,0.2);
+    }
+
+    .quiz-error {
+      color: #ff4757;
+      font-size: 0.95rem;
+      margin-top: 10px;
+      display: none;
+      font-weight: 600;
+    }
+
+    /* Notification Permission Banner */
+    .notification-banner {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.85));
+      color: #667eea;
+      padding: 20px 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+      display: none;
+      z-index: 9999;
+      max-width: 90%;
+      text-align: center;
+      animation: slideUp 0.5s ease;
+    }
+
+    .notification-banner.show {
+      display: block;
+    }
+
+    .notification-banner p {
+      margin-bottom: 15px;
+      font-weight: 600;
+      color: #667eea;
+    }
+
+    .notification-banner button {
+      margin: 0 5px;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateX(-50%) translateY(100px); opacity: 0; }
+      to { transform: translateX(-50%) translateY(0); opacity: 1; }
+    }
+
+    /* Optimisation mobile */
+    @media (max-width: 768px) {
+      h1 { font-size: 2.2rem; }
+      .subtitle { font-size: 1.1rem; }
+      p { font-size: 1rem; }
+      
+      .card { 
+        padding: 20px 16px;
+        border-radius: 0;
+      }
+      
+      button { 
+        padding: 12px 20px; 
+        font-size: 0.9rem; 
+      }
+      
+      .lyrics-scroll { 
+        height: 280px; 
+        padding: 20px 12px;
+        width: 95%;
+      }
+      
+      .lyric-line div { 
+        font-size: 0.85rem; 
+      }
+      
+      .fullscreen-btn {
+        top: 12px;
+        right: 12px;
+        padding: 6px 10px;
+        font-size: 0.8rem;
+      }
+
+      video {
+        margin: 16px 0;
+        width: 95%;
+      }
+
+      .controls-container {
+        width: 95%;
+      }
+
+      .quiz-content {
+        padding: 30px 20px;
+      }
+
+      .quiz-content h2 {
+        font-size: 1.4rem;
+      }
+
+      .quiz-content p {
+        font-size: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 { font-size: 1.8rem; }
+      .subtitle { font-size: 1rem; }
+      
+      .card { 
+        padding: 20px 12px;
+      }
+      
+      .actions {
+        flex-direction: column;
+        width: 100%;
+      }
+      
+      button {
+        width: 100%;
+      }
+      
+      .lyrics-scroll {
+        height: 240px;
+        width: 98%;
+      }
+      
+      .lyric-line {
+        flex-direction: column;
+        gap: 8px;
+        padding: 10px 12px;
+      }
+      
+      .lyric-line div {
+        width: 100%;
+        font-size: 0.9rem;
+      }
+      
+      .lyric-line.header {
+        flex-direction: row;
+      }
+
+      video {
+        width: 98%;
+      }
+
+      .controls-container {
+        width: 98%;
+      }
+    }
+
+    /* Mode plein écran */
+    .card:fullscreen,
+    .card:-webkit-full-screen,
+    .card:-moz-full-screen {
+      max-width: 100vw;
+      width: 100vw;
+      height: 100vh;
+      border-radius: 0;
+      padding: 40px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+
+    .card:fullscreen .lyrics-scroll,
+    .card:-webkit-full-screen .lyrics-scroll,
+    .card:-moz-full-screen .lyrics-scroll {
+      height: 50vh;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <button class="fullscreen-btn" onclick="toggleFullscreen()">⛶ Plein écran</button>
+    
+    <h1>Khadidiatou ❤️</h1>
+    <p class="subtitle">Mon amour, ma vie, mon tout</p>
+    <p>Ce site n'a pas grand-chose de spécial… sauf qu'il est fait pour toi.</p>
+
+    <video controls autoplay muted loop playsinline>
+      <source src="video.mp4" type="video/mp4" />
+      Ton navigateur ne supporte pas la vidéo.
+    </video>
+
+    <div class="actions">
+      <button onclick="openQuiz()">Message caché 💌</button>
+      <button class="secondary" id="musicBtn" onclick="toggleMusic()">Lancer musique 🎵</button>
+    </div>
+
+    <div class="lyrics-scroll" id="lyricsContainer">
+      <div class="lyrics-inner" id="lyrics-inner">
+        <!-- Les paroles seront générées par JavaScript -->
+      </div>
+    </div>
+
+    <div class="controls-container">
+      <div class="time-display">
+        <span id="currentTime">0:00</span>
+        <span id="totalTime">3:48</span>
+      </div>
+      <div class="progress-bar" id="progressBar" onclick="seekMusic(event)">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+    </div>
+
+    <div id="secret" class="secret">
+      <p>Si tu lis ce message, c'est que tu as trouvé mon petit secret 😌<br>Je t'aime plus que les mots ne peuvent le dire.</p>
+    </div>
+
+    <div id="endMessage" class="end-message">
+      <p>✨ Cette chanson est finie, mais mon amour pour toi ne le sera jamais ✨</p>
+    </div>
+
+    <div id="floatingMessage" class="floating-message"></div>
+
+    <!-- Quiz Modal -->
+    <div id="quizModal" class="quiz-modal">
+      <div class="quiz-content">
+        <h2>💕 Avant de voir ton message...</h2>
+        <p id="quizQuestion"></p>
+        <input type="text" id="quizAnswer" class="quiz-input" placeholder="Ta réponse...">
+        <p class="quiz-error" id="quizError">❌ Mauvaise réponse, essaie encore !</p>
+        <div class="quiz-buttons">
+          <button class="quiz-btn cancel" onclick="closeQuiz()">Annuler</button>
+          <button class="quiz-btn submit" onclick="checkAnswer()">Valider ✓</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notification Permission Banner -->
+    <div id="notificationBanner" class="notification-banner">
+      <p>🔔 Reçois des messages d'amour quotidiens</p>
+      <div>
+        <button class="quiz-btn submit" onclick="enableNotifications()">Activer 💕</button>
+        <button class="quiz-btn cancel" onclick="dismissNotificationBanner()">Plus tard</button>
+      </div>
+    </div>
+  </div>
+
+  <audio id="music" loop>
+    <source src="musique.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    // Timestamps pour synchroniser les paroles (en secondes) - Como Mirarte 3:48
+    const lyrics = [
+      { time: 0, es: "No me salen las palabras para expresarte que te quiero", fr: "Je ne trouve pas les mots pour te dire que je t'aime" },
+      { time: 7, es: "No sé cómo explicarte qué me haces sentir", fr: "Je ne sais pas comment t'expliquer ce que tu me fais ressentir" },
+      { time: 12, es: "Como si fuera el verano y el invierno no existiera", fr: "Comme si c'était l'été et que l'hiver n'existait pas" },
+      { time: 18, es: "Como si se para todo", fr: "Comme si tout s'arrêtait" },
+      { time: 24, es: "Y con esa sonrisa", fr: "Et avec ce sourire" },
+      { time: 27, es: "Que cambia la vida, miraste hacia aquí", fr: "Qui change la vie, tu as regardé par ici" },
+      { time: 31, es: "Y ya no puedo contemplar", fr: "Et je ne peux plus imaginer" },
+      { time: 35, es: "Que tú no seas la que me ama", fr: "Que tu ne sois pas celle qui m'aime" },
+      { time: 40, es: "Y cómo mirarte", fr: "Et comment te regarder" },
+      { time: 44, es: "A esos ojos que me dejan en enero", fr: "Ces yeux qui me laissent en janvier" },
+      { time: 50, es: "Cuando sé que no son míos y me muero", fr: "Quand je sais qu'ils ne sont pas à moi et que j'en meurs" },
+      { time: 56, es: "El destino no nos quiere ver pasar, oh", fr: "Le destin ne veut pas nous voir passer, oh" },
+      { time: 63, es: "Y cómo decirte", fr: "Et comment te dire" },
+      { time: 67, es: "Que no quiero que este amor sea pasajero", fr: "Que je ne veux pas que cet amour soit passager" },
+      { time: 72, es: "Que de pronto se dé un día y yo te espero", fr: "Qu'il arrive soudain un jour et que je t'attends" },
+      { time: 78, es: "El destino no nos tiene que importar", fr: "Le destin ne doit pas nous importer" },
+      { time: 88, es: "No sé cómo ser yo mismo, si no estás al lado mío", fr: "Je ne sais pas comment être moi-même si tu n'es pas à mes côtés" },
+      { time: 93, es: "Se harán largos estos meses, si no estás junto a mí", fr: "Ces mois seront longs si tu n'es pas à mes côtés" },
+      { time: 99, es: "Y con esa sonrisa, que nunca se olvida, llegaste y te vi", fr: "Et avec ce sourire, que l'on n'oublie jamais, tu es arrivée et je t'ai vue" },
+      { time: 107, es: "Y ya no puedo soportar, que tú no seas la que me ama", fr: "Et je ne peux plus supporter que tu ne sois pas celle qui m'aime" },
+      { time: 116, es: "Y cómo mirarte", fr: "Et comment te regarder" },
+      { time: 120, es: "A esos ojos que me dejan en enero", fr: "Ces yeux qui me laissent en janvier" },
+      { time: 125, es: "Cuando sé que no son míos y me muero", fr: "Quand je sais qu'ils ne sont pas à moi et que je meurs" },
+      { time: 131, es: "El destino no nos quiere ver pasar, oh", fr: "Le destin ne veut pas nous voir passer, oh" },
+      { time: 139, es: "Y cómo decirte", fr: "Et comment te dire" },
+      { time: 142, es: "Que no quiero que este amor sea pasajero", fr: "Que je ne veux pas que cet amour soit passager" },
+      { time: 148, es: "Que de pronto se dé un día y yo te espero", fr: "Qu'il arrive soudain un jour et que je t'attends" },
+      { time: 153, es: "El destino no nos tiene que importar", fr: "Le destin ne doit pas nous importer" },
+      { time: 160, es: "Y cómo olvidarte", fr: "Et comment t'oublier" },
+      { time: 164, es: "Si la vida me enseñó que vas primero", fr: "Si la vie m'a appris que tu passes en premier" },
+      { time: 169, es: "No me importa la distancia, yo te quiero", fr: "Peu m'importe la distance, je t'aime" },
+      { time: 175, es: "Y al final sé que a mi lado vas a estar", fr: "Et à la fin, je sais que tu seras à mes côtés" },
+      { time: 183, es: "Voy a esperarte", fr: "Je t'attendrai" },
+      { time: 187, es: "Cuando se ama de verdad no existe el tiempo", fr: "Quand on aime vraiment, le temps n'existe pas" },
+      { time: 192, es: "Y te juro que no es el final del cuento", fr: "Et je te jure que ce n'est pas la fin de l'histoire" },
+      { time: 198, es: "El destino no nos puede separar", fr: "Le destin ne peut pas nous séparer" },
+      { time: 217, es: "Cómo mirarte", fr: "Comment te regarder" }
+    ];
+
+    // Questions et réponses du quiz
+    const quizData = [
+      { question: "Quelle est la date de notre anniversaire de couple ? (format: JJ mois)", answer: ["17 avril", "17 Avril", "17avril"] },
+      { question: "Comment tu préfères que je t'appelle ?", answer: ["Ma vie", "ma vie", "mavie"] },
+      { question: "Quel est mon plat préféré ?", answer: ["Yassa", "yassa", "YASSA"] },
+      { question: "Quelle est ma couleur préférée ?", answer: ["Bleu", "bleu", "BLEU", "blue"] },
+      { question: "Qu'est-ce que j'aime le plus chez toi ?", answer: ["Yeux", "yeux", "tes yeux", "Tes yeux"] }
+    ];
+
+    // Messages secrets aléatoires
+    const secretMessages = [
+      "Khadidiatou, chaque jour passé avec toi est un cadeau. Tu es la lumière de ma vie et mon plus beau rêve devenu réalité. Je t'aime infiniment. 💕",
+      "Ma Khadidiatou chérie, tu es ma raison de sourire chaque matin. Ton amour me rend plus fort et me fait croire en la magie. Je t'aimerai toujours. ✨",
+      "Khadidiatou, mon cœur, tu es tout pour moi. Ta présence illumine mes jours et tes yeux sont mon refuge. Je t'aime plus que les mots ne peuvent le dire. 💖",
+      "Ma belle Khadidiatou, avec toi j'ai trouvé mon âme sœur. Chaque instant à tes côtés est précieux. Tu es mon amour éternel. 💓",
+      "Khadidiatou, ma vie, tu as transformé mon monde en un paradis. Ton sourire est ma plus belle récompense. Je t'aime de tout mon cœur. 🌟"
+    ];
+
+    let isPlaying = false;
+    let currentLyricIndex = -1;
+    let currentQuiz = null;
+
+    // Générer les paroles dans le DOM
+    function generateLyrics() {
+      const container = document.getElementById('lyrics-inner');
+      
+      // Header
+      const header = document.createElement('div');
+      header.className = 'lyric-line header';
+      header.innerHTML = '<div><strong>Español 🇪🇸</strong></div><div><strong>Français 🇫🇷</strong></div>';
+      container.appendChild(header);
+
+      // Lignes de paroles
+      lyrics.forEach((lyric, index) => {
+        const line = document.createElement('div');
+        line.className = 'lyric-line';
+        line.id = 'lyric-' + index;
+        line.innerHTML = `<div>${lyric.es}</div><div>${lyric.fr}</div>`;
+        container.appendChild(line);
+      });
+    }
+
+    // Quiz functions
+    function openQuiz() {
+      const modal = document.getElementById('quizModal');
+      const questionEl = document.getElementById('quizQuestion');
+      const answerEl = document.getElementById('quizAnswer');
+      const errorEl = document.getElementById('quizError');
+      
+      // Choisir une question aléatoire
+      currentQuiz = quizData[Math.floor(Math.random() * quizData.length)];
+      questionEl.textContent = currentQuiz.question;
+      answerEl.value = '';
+      errorEl.style.display = 'none';
+      
+      modal.classList.add('active');
+      answerEl.focus();
+    }
+
+    function closeQuiz() {
+      const modal = document.getElementById('quizModal');
+      modal.classList.remove('active');
+      currentQuiz = null;
+    }
+
+    function checkAnswer() {
+      const answerEl = document.getElementById('quizAnswer');
+      const errorEl = document.getElementById('quizError');
+      const userAnswer = answerEl.value.trim();
+      
+      // Vérifier si la réponse est correcte
+      const isCorrect = currentQuiz.answer.some(ans => 
+        userAnswer.toLowerCase() === ans.toLowerCase()
+      );
+      
+      if (isCorrect) {
+        closeQuiz();
+        revealSecret();
+      } else {
+        errorEl.style.display = 'block';
+        answerEl.value = '';
+        answerEl.focus();
+      }
+    }
+
+    // Gérer la touche Entrée dans le quiz
+    document.addEventListener('DOMContentLoaded', () => {
+      const answerEl = document.getElementById('quizAnswer');
+      if (answerEl) {
+        answerEl.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') {
+            checkAnswer();
+          }
+        });
+      }
+    });
+
+    // Formater le temps
+    function formatTime(seconds) {
+      const mins = Math.floor(seconds / 60);
+      const secs = Math.floor(seconds % 60);
+      return `${mins}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    // Mettre à jour les paroles actives
+    function updateLyrics() {
+      const music = document.getElementById('music');
+      const currentTime = music.currentTime;
+      
+      // Trouver la ligne active
+      let activeIndex = -1;
+      for (let i = lyrics.length - 1; i >= 0; i--) {
+        if (currentTime >= lyrics[i].time) {
+          activeIndex = i;
+          break;
+        }
+      }
+
+      // Mettre à jour seulement si changement
+      if (activeIndex !== currentLyricIndex) {
+        // Retirer l'ancienne ligne active
+        if (currentLyricIndex >= 0) {
+          const oldLine = document.getElementById('lyric-' + currentLyricIndex);
+          if (oldLine) oldLine.classList.remove('active');
+        }
+
+        // Ajouter la nouvelle ligne active
+        if (activeIndex >= 0) {
+          const newLine = document.getElementById('lyric-' + activeIndex);
+          if (newLine) {
+            newLine.classList.add('active');
+            // Scroll automatique centré sur la ligne active
+            const container = document.getElementById('lyricsContainer');
+            const lineTop = newLine.offsetTop;
+            const containerHeight = container.clientHeight;
+            const lineHeight = newLine.clientHeight;
+            const scrollPosition = lineTop - (containerHeight / 2) + (lineHeight / 2);
+            
+            container.scrollTo({
+              top: scrollPosition,
+              behavior: 'smooth'
+            });
+          }
+        }
+
+        currentLyricIndex = activeIndex;
+      }
+
+      // Mettre à jour la barre de progression
+      const duration = music.duration || 228;
+      const progress = (currentTime / duration) * 100;
+      document.getElementById('progressFill').style.width = progress + '%';
+      
+      // Mettre à jour le temps
+      document.getElementById('currentTime').textContent = formatTime(currentTime);
+      document.getElementById('totalTime').textContent = formatTime(duration);
+
+      // Afficher message de fin
+      if (currentTime >= duration - 2 && currentTime < duration) {
+        document.getElementById('endMessage').style.display = 'block';
+      }
+    }
+
+    function revealSecret() { 
+      const secretEl = document.getElementById('secret');
+      const secretP = secretEl.querySelector('p');
+      
+      // Choisir un message aléatoire
+      const randomMessage = secretMessages[Math.floor(Math.random() * secretMessages.length)];
+      secretP.innerHTML = randomMessage;
+      
+      secretEl.style.display = 'block';
+      
+      // Scroll vers le message
+      secretEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    
+    function toggleMusic() {
+      const music = document.getElementById('music');
+      const btn = document.getElementById('musicBtn');
+      
+      if (music.paused) {
+        music.play();
+        btn.textContent = 'Pause musique ⏸️';
+        isPlaying = true;
+      } else {
+        music.pause();
+        btn.textContent = 'Lancer musique 🎵';
+        isPlaying = false;
+      }
+    }
+
+    function seekMusic(event) {
+      const music = document.getElementById('music');
+      const progressBar = document.getElementById('progressBar');
+      const rect = progressBar.getBoundingClientRect();
+      const clickX = event.clientX - rect.left;
+      const width = rect.width;
+      const duration = music.duration || 228;
+      const seekTime = (clickX / width) * duration;
+      music.currentTime = seekTime;
+    }
+
+    function toggleFullscreen() {
+      const card = document.querySelector('.card');
+      if (!document.fullscreenElement) {
+        card.requestFullscreen().catch(err => {
+          alert(`Erreur: ${err.message}`);
+        });
+      } else {
+        document.exitFullscreen();
+      }
+    }
+
+    // Synchronisation des paroles
+    const music = document.getElementById('music');
+    music.addEventListener('timeupdate', updateLyrics);
+
+    // Animation des cœurs améliorée
+    setInterval(() => {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      const hearts = ['❤️', '💕', '💖', '💗', '💓', '💝'];
+      heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.fontSize = (18 + Math.random() * 28) + 'px';
+      heart.style.animationDuration = (5 + Math.random() * 4) + 's';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 9000);
+    }, 400);
+
+    // Initialiser
+    generateLyrics();
+
+    // Créer des étoiles scintillantes
+    function createStars() {
+      for (let i = 0; i < 50; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.left = Math.random() * 100 + 'vw';
+        star.style.top = Math.random() * 100 + 'vh';
+        star.style.animationDelay = Math.random() * 3 + 's';
+        star.style.animationDuration = (2 + Math.random() * 3) + 's';
+        document.body.appendChild(star);
+      }
+    }
+
+    // Messages romantiques aléatoires
+    const loveMessages = [
+      "Tu es ma raison de sourire, Khadidiatou 💕",
+      "Chaque moment avec toi est magique ✨",
+      "Mon cœur bat pour toi, ma Khadidiatou 💓",
+      "Tu es mon étoile, Khadidiatou 🌟",
+      "Je t'aime plus chaque jour 💖",
+      "Tu illumines ma vie, Khadidiatou 🌟",
+      "À jamais toi et moi 💑"
+    ];
+
+    let messageShown = false;
+
+    // Afficher un message romantique au milieu de la chanson
+    music.addEventListener('timeupdate', () => {
+      if (!messageShown && music.currentTime >= 114 && music.currentTime < 116) {
+        const msg = loveMessages[Math.floor(Math.random() * loveMessages.length)];
+        showFloatingMessage(msg);
+        messageShown = true;
+      }
+      
+      // Réinitialiser pour le prochain loop
+      if (music.currentTime < 10) {
+        messageShown = false;
+      }
+    });
+
+    function showFloatingMessage(text) {
+      const msgEl = document.getElementById('floatingMessage');
+      msgEl.textContent = text;
+      msgEl.style.display = 'block';
+      
+      setTimeout(() => {
+        msgEl.style.display = 'none';
+      }, 3000);
+    }
+
+    // Particules d'amour au clic
+    document.addEventListener('click', (e) => {
+      createLoveParticles(e.clientX, e.clientY);
+    });
+
+    function createLoveParticles(x, y) {
+      const particles = ['💕', '💖', '💗', '💓', '✨', '⭐'];
+      for (let i = 0; i < 6; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'love-particle';
+        particle.textContent = particles[Math.floor(Math.random() * particles.length)];
+        particle.style.left = x + 'px';
+        particle.style.top = y + 'px';
+        
+        const angle = (i / 6) * Math.PI * 2;
+        const distance = 60 + Math.random() * 40;
+        const tx = Math.cos(angle) * distance;
+        const ty = Math.sin(angle) * distance;
+        
+        particle.style.setProperty('--tx', tx + 'px');
+        particle.style.setProperty('--ty', ty + 'px');
+        
+        document.body.appendChild(particle);
+        
+        setTimeout(() => particle.remove(), 1000);
+      }
+    }
+
+    createStars();
+
+    // ========== PWA & NOTIFICATIONS ==========
+    
+    // Enregistrer le Service Worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+          .then(reg => console.log('Service Worker enregistré'))
+          .catch(err => console.log('Erreur Service Worker:', err));
+      });
+    }
+
+    // Afficher la bannière de notification après 30 secondes
+    setTimeout(() => {
+      if ('Notification' in window && Notification.permission === 'default') {
+        document.getElementById('notificationBanner').classList.add('show');
+      }
+    }, 30000);
+
+    // Activer les notifications
+    async function enableNotifications() {
+      if (!('Notification' in window)) {
+        alert('Les notifications ne sont pas supportées sur ce navigateur');
+        return;
+      }
+
+      const permission = await Notification.requestPermission();
+      
+      if (permission === 'granted') {
+        dismissNotificationBanner();
+        
+        // Notification de bienvenue
+        new Notification('💕 Notifications activées !', {
+          body: 'Tu recevras des messages d\'amour quotidiens pour Khadidiatou',
+          icon: 'icon-192.png',
+          badge: 'icon-192.png'
+        });
+
+        // Programmer les notifications quotidiennes
+        scheduleNotifications();
+      }
+    }
+
+    function dismissNotificationBanner() {
+      document.getElementById('notificationBanner').classList.remove('show');
+    }
+
+    // Programmer les notifications
+    function scheduleNotifications() {
+      // Messages d'amour aléatoires
+      const loveNotifications = [
+        { title: '💕 Message du jour', body: 'Khadidiatou, tu es la lumière de ma vie' },
+        { title: '✨ Pense à toi', body: 'Chaque instant avec Khadidiatou est magique' },
+        { title: '💖 Je t\'aime', body: 'Mon cœur bat pour toi, ma Khadidiatou' },
+        { title: '🌟 Tu es unique', body: 'Khadidiatou, tu illumines mes jours' },
+        { title: '💓 Mon amour', body: 'À jamais toi et moi, Khadidiatou' }
+      ];
+
+      // Calculer les jours depuis l'anniversaire (17 avril)
+      const anniversaryDate = new Date(new Date().getFullYear(), 3, 17); // mois 3 = avril
+      const today = new Date();
+      let daysSince = Math.floor((today - anniversaryDate) / (1000 * 60 * 60 * 24));
+      
+      if (daysSince < 0) {
+        // Si l'anniversaire n'est pas encore passé cette année, calculer depuis l'année dernière
+        anniversaryDate.setFullYear(anniversaryDate.getFullYear() - 1);
+        daysSince = Math.floor((today - anniversaryDate) / (1000 * 60 * 60 * 24));
+      }
+
+      // Notification quotidienne à 10h
+      const now = new Date();
+      const notificationTime = new Date();
+      notificationTime.setHours(10, 0, 0, 0);
+      
+      if (now > notificationTime) {
+        notificationTime.setDate(notificationTime.getDate() + 1);
+      }
+      
+      const timeUntilNotification = notificationTime - now;
+      
+      setTimeout(() => {
+        const randomNotif = loveNotifications[Math.floor(Math.random() * loveNotifications.length)];
+        new Notification(randomNotif.title, {
+          body: randomNotif.body,
+          icon: 'icon-192.png',
+          badge: 'icon-192.png'
+        });
+        
+        // Répéter chaque jour
+        setInterval(() => {
+          const randomNotif = loveNotifications[Math.floor(Math.random() * loveNotifications.length)];
+          new Notification(randomNotif.title, {
+            body: randomNotif.body,
+            icon: 'icon-192.png',
+            badge: 'icon-192.png'
+          });
+        }, 24 * 60 * 60 * 1000); // 24 heures
+      }, timeUntilNotification);
+
+      // Notification compteur de jours (une fois par jour à 20h)
+      const counterTime = new Date();
+      counterTime.setHours(20, 0, 0, 0);
+      
+      if (now > counterTime) {
+        counterTime.setDate(counterTime.getDate() + 1);
+      }
+      
+      const timeUntilCounter = counterTime - now;
+      
+      setTimeout(() => {
+        new Notification('💑 Notre amour', {
+          body: `Cela fait ${daysSince} jours que nous sommes ensemble, Khadidiatou 💕`,
+          icon: 'icon-192.png',
+          badge: 'icon-192.png'
+        });
+        
+        // Répéter chaque jour
+        setInterval(() => {
+          daysSince++;
+          new Notification('💑 Notre amour', {
+            body: `Cela fait ${daysSince} jours que nous sommes ensemble, Khadidiatou 💕`,
+            icon: 'icon-192.png',
+            badge: 'icon-192.png'
+          });
+        }, 24 * 60 * 60 * 1000);
+      }, timeUntilCounter);
+
+      // Rappel anniversaire (7 jours avant)
+      const nextAnniversary = new Date(new Date().getFullYear(), 3, 17);
+      if (today > nextAnniversary) {
+        nextAnniversary.setFullYear(nextAnniversary.getFullYear() + 1);
+      }
+      
+      const daysUntilAnniversary = Math.floor((nextAnniversary - today) / (1000 * 60 * 60 * 24));
+      
+      if (daysUntilAnniversary === 7) {
+        new Notification('🎉 Rappel important !', {
+          body: 'Notre anniversaire dans 7 jours ! Le 17 avril 💕',
+          icon: 'icon-192.png',
+          badge: 'icon-192.png'
+        });
+      }
+
+      if (daysUntilAnniversary === 1) {
+        new Notification('🎊 C\'est demain !', {
+          body: 'Notre anniversaire est demain, Khadidiatou ! 💖',
+          icon: 'icon-192.png',
+          badge: 'icon-192.png'
+        });
+      }
+    }
+
+    // Vérifier si c'est l'anniversaire aujourd'hui
+    function checkAnniversary() {
+      const today = new Date();
+      if (today.getMonth() === 3 && today.getDate() === 17) {
+        setTimeout(() => {
+          showFloatingMessage('🎉 Joyeux anniversaire mon amour ! 💕 17 Avril 🎊');
+        }, 2000);
+        
+        if ('Notification' in window && Notification.permission === 'granted') {
+          new Notification('🎊 Joyeux Anniversaire !', {
+            body: 'C\'est notre jour spécial, Khadidiatou ! Je t\'aime 💕',
+            icon: 'icon-192.png',
+            badge: 'icon-192.png'
+          });
+        }
+      }
+    }
+
+    checkAnniversary();
+  </script>
+</body>
+</html>
